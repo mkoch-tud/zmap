@@ -104,6 +104,9 @@ option "iplayer"                X "Sends IP packets instead of Ethernet (for VPN
 option "netmap-wait-ping"       - "Wait for IP to respond to ping before commencing scan (netmap only)"
     typestr="ip"
     optional string
+option "rcv-iface"              - "Specify separate network interface for capturing"
+    typestr="name"
+    optional string
 
 section "Probe Modules"
 option "probe-module"           M "Select probe module"

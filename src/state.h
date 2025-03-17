@@ -139,6 +139,9 @@ struct state_conf {
 	int no_header_row;
 	int dedup_method;
 	int dedup_window_size;
+	//additional network iface for capturing packets
+	//useful for asymmetric routing
+	char *rcvif;
 #ifdef PFRING
 	struct {
 		pfring_zc_cluster *cluster;

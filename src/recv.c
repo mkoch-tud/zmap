@@ -231,7 +231,12 @@ int recv_run(pthread_mutex_t *recv_ready_mutex)
 	}
 
 	log_trace("recv", "recv thread started");
-	log_debug("recv", "capturing responses on %s", zconf.iface);
+	//log_debug("recv", "capturing responses on %s", zconf.iface);
+	if (zconf.rcvif == NULL){
+		log_debug("recv", "capturing responses on %s", zconf.iface);
+	} else {
+		log_debug("recv", "capturing responses on %s", zconf.rcvif);
+	}
 	if (!zconf.dryrun) {
 		recv_init();
 	}

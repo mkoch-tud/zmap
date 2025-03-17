@@ -70,7 +70,8 @@ struct state_conf zconf = {
     .source_port_first = 32768, // (these are the default
     .source_port_last = 61000,	//   ephemeral range on Linux),
     .status_updates_file = NULL,
-    .syslog = 1};
+    .syslog = 1,
+    .rcvif = NULL};
 
 void init_empty_global_configuration(struct state_conf *c)
 {

@@ -150,7 +150,8 @@ option "list-output-fields"     - "List all fields that can be output by selecte
     optional
 option "no-header-row"          - "Precludes outputting any header rows in data (e.g., CSV headers)"
     optional
-
+option "all-replies"        - "Log all replies, independent of other filter option"
+    optional
 
 section "Response Deduplication"
 option "dedup-method"           - "Specifies how response deduplication should be performed. Options: default, none, full, window"

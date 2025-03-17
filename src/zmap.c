@@ -580,6 +580,10 @@ int main(int argc, char *argv[])
 	SET_IF_GIVEN(zconf.ipv6_source_ip, ipv6_source_ip);
 	// Add a separate receive interface for capturing packets
 	SET_IF_GIVEN(zconf.rcvif, rcv_iface);
+	// Add option to capture all replies (independent of success indicator)
+	if (args.all_replies_given) {
+		zconf.all_replies = 1;
+	}
 
 	if (zconf.ipv6_target_filename && !zconf.ipv6_source_ip) {
 		log_fatal("ipv6", "No IPv6 source address specified");

@@ -71,7 +71,8 @@ struct state_conf zconf = {
     .source_port_last = 61000,	//   ephemeral range on Linux),
     .status_updates_file = NULL,
     .syslog = 1,
-    .rcvif = NULL};
+    .rcvif = NULL,
+    .all_replies = 0};
 
 void init_empty_global_configuration(struct state_conf *c)
 {

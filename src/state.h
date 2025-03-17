@@ -142,6 +142,8 @@ struct state_conf {
 	//additional network iface for capturing packets
 	//useful for asymmetric routing
 	char *rcvif;
+	//option to log all replies (independent of success value)
+	int all_replies;
 #ifdef PFRING
 	struct {
 		pfring_zc_cluster *cluster;

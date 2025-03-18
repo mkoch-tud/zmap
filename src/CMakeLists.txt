@@ -43,6 +43,7 @@ set(PROBE_MODULE_SOURCES
     probe_modules/module_ipv6_udp_dns.c
     probe_modules/module_icmp6_echoscan.c
     probe_modules/module_icmp6_echo_time_novalidation.c
+    probe_modules/module_icmp6_router_discovery.c
 )
 
 set(SOURCES

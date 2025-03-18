@@ -48,7 +48,7 @@ struct icmp6_payload_for_rtt {
 int icmp6_echotime_global_initialize(struct state_conf *conf)
 {
 	// Only look at received packets destined to the specified scanning address (useful for parallel zmap scans)
-	if (asprintf((char ** restrict) &module_icmp6_echo_time_novalidation.pcap_filter, "%s && ip6 dst host %s", module_icmp6_echo_time_novalidation.pcap_filter, conf->ipv6_source_ip) == -1) {
+	if (asprintf((char ** restrict) &module_icmp6_router_discovery.pcap_filter, "%s && ip6 dst host %s", module_icmp6_router_discovery.pcap_filter, conf->ipv6_source_ip) == -1) {
 		return 1;
 	}
 

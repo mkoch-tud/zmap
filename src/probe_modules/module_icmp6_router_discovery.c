@@ -55,7 +55,7 @@ int icmp6_router_discovery_global_initialize(struct state_conf *conf)
 	return EXIT_SUCCESS;
 }
 
-static int icmp6_router_discovery_init_perthread(void* buf, macaddr_t *src,
+/*static int icmp6_router_discovery_init_perthread(void* buf, macaddr_t *src,
 		macaddr_t *gw, __attribute__((unused)) port_h_t dst_port,
 		__attribute__((unused)) void **arg_ptr)
 {
@@ -74,6 +74,7 @@ static int icmp6_router_discovery_init_perthread(void* buf, macaddr_t *src,
 
 	return EXIT_SUCCESS;
 }
+*/
 
 static int icmp6_router_discovery_make_packet(void *buf, size_t *buf_len, UNUSED ipaddr_n_t src_ip,  UNUSED ipaddr_n_t dst_ip, uint8_t ttl, uint32_t *validation, UNUSED int probe_num, UNUSED void *arg)
 {
@@ -307,7 +308,7 @@ probe_module_t module_icmp6_router_discovery = {
 	.pcap_snaplen =  118, // 14 ethernet header + 40 IPv6 header + 8 ICMPv6 header + 40 inner IPv6 header + 8 inner ICMPv6 header + 8 payload
 	.port_args = 0,
 	.global_initialize = &icmp6_router_discovery_global_initialize,
-	.thread_initialize = &icmp6_router_discovery_init_perthread,
+	//.thread_initialize = &icmp6_router_discovery_init_perthread,
 	.make_packet = &icmp6_router_discovery_make_packet,
 	.print_packet = &icmp6_router_discovery_print_packet,
 	.process_packet = &icmp6_router_discovery_process_packet,

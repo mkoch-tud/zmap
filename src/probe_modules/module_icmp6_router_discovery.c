@@ -45,7 +45,7 @@ struct icmp6_payload_for_rtt {
 	struct in6_addr secondary_ip;
 };
 
-int icmp6_echotime_global_initialize(struct state_conf *conf)
+int icmp6_router_discovery_global_initialize(struct state_conf *conf)
 {
 	// Only look at received packets destined to the specified scanning address (useful for parallel zmap scans)
 	if (asprintf((char ** restrict) &module_icmp6_router_discovery.pcap_filter, "%s && ip6 dst host %s", module_icmp6_router_discovery.pcap_filter, conf->ipv6_source_ip) == -1) {
@@ -55,7 +55,7 @@ int icmp6_echotime_global_initialize(struct state_conf *conf)
 	return EXIT_SUCCESS;
 }
 
-static int icmp6_echotime_init_perthread(void* buf, macaddr_t *src,
+static int icmp6_router_discovery_init_perthread(void* buf, macaddr_t *src,
 		macaddr_t *gw, __attribute__((unused)) port_h_t dst_port,
 		__attribute__((unused)) void **arg_ptr)
 {
@@ -75,7 +75,7 @@ static int icmp6_echotime_init_perthread(void* buf, macaddr_t *src,
 	return EXIT_SUCCESS;
 }
 
-static int icmp6_echotime_make_packet(void *buf, size_t *buf_len, UNUSED ipaddr_n_t src_ip,  UNUSED ipaddr_n_t dst_ip, uint8_t ttl, uint32_t *validation, UNUSED int probe_num, UNUSED void *arg)
+static int icmp6_router_discovery_make_packet(void *buf, size_t *buf_len, UNUSED ipaddr_n_t src_ip,  UNUSED ipaddr_n_t dst_ip, uint8_t ttl, uint32_t *validation, UNUSED int probe_num, UNUSED void *arg)
 {
 	struct ether_header *eth_header = (struct ether_header *) buf;
 	struct ip6_hdr *ip6_header = (struct ip6_hdr *)(&eth_header[1]);
@@ -109,7 +109,7 @@ static int icmp6_echotime_make_packet(void *buf, size_t *buf_len, UNUSED ipaddr_
 	return EXIT_SUCCESS;
 }
 
-static void icmp6_echotime_print_packet(FILE *fp, void* packet)
+static void icmp6_router_discovery_print_packet(FILE *fp, void* packet)
 {
 	struct ether_header *ethh = (struct ether_header *) packet;
 	struct ip6_hdr *iph = (struct ip6_hdr *) &ethh[1];
@@ -129,7 +129,7 @@ static void icmp6_echotime_print_packet(FILE *fp, void* packet)
 }
 
 
-static int icmp6_echotime_validate_packet(const struct ip *ip_hdr,
+static int icmp6_router_discovery_validate_packet(const struct ip *ip_hdr,
 		uint32_t len, __attribute__((unused)) uint32_t *src_ip,UNUSED uint32_t *validation)
 {
     struct ip6_hdr *ip6_hdr = (struct ip6_hdr*) ip_hdr;
@@ -179,7 +179,7 @@ static int icmp6_echotime_validate_packet(const struct ip *ip_hdr,
 	return 1;
 }
 
-static void icmp6_echotime_process_packet(const u_char *packet,
+static void icmp6_router_discovery_process_packet(const u_char *packet,
 		__attribute__((unused)) uint32_t len, fieldset_t *fs,
 		__attribute__((unused)) uint32_t *validation,
 		__attribute__((unused)) struct timespec ts)
@@ -306,12 +306,12 @@ probe_module_t module_icmp6_router_discovery = {
 	.pcap_filter = "icmp6 && (ip6[40] == 129 || ip6[40] == 3 || ip6[40] == 1 || ip6[40] == 2 || ip6[40] == 4)", // and icmp6[0]=!8",
 	.pcap_snaplen =  118, // 14 ethernet header + 40 IPv6 header + 8 ICMPv6 header + 40 inner IPv6 header + 8 inner ICMPv6 header + 8 payload
 	.port_args = 0,
-	.global_initialize = &icmp6_echotime_global_initialize,
-	.thread_initialize = &icmp6_echotime_init_perthread,
-	.make_packet = &icmp6_echotime_make_packet,
-	.print_packet = &icmp6_echotime_print_packet,
-	.process_packet = &icmp6_echotime_process_packet,
-	.validate_packet = &icmp6_echotime_validate_packet,
+	.global_initialize = &icmp6_router_discovery_global_initialize,
+	.thread_initialize = &icmp6_router_discovery_init_perthread,
+	.make_packet = &icmp6_router_discovery_make_packet,
+	.print_packet = &icmp6_router_discovery_print_packet,
+	.process_packet = &icmp6_router_discovery_process_packet,
+	.validate_packet = &icmp6_router_discovery_validate_packet,
 	.close = NULL,
 	.fields = fields,
 	.numfields = 10};

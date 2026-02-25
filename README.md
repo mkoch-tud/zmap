@@ -73,6 +73,22 @@ More information can be found using the `--help` flag.
 
 As targets for your IPv6 measurements you can e.g. use addresses from our [IPv6 Hitlist Service](https://ipv6hitlist.github.io/).
 
+Separate interface for receiving packets
+-----------------------
+
+We added a new option to specify a separate receive interface:
+* `--rcv-iface`: Set separate interface for receiving packets
+
+Setting this option alone does not mean that all replies will automatically be directed to this interface; it simply means that ZMap listens for incoming replies on the specified interface.
+
+We use this option to handle asymmetric routing on the scan server. 
+To make this work, we set up a dummy interface and add a routing table entry that routes the incoming traffic destined for the `--ipv6-source-ip` address toward the receive interface.
+
+Commands to set this up might look like this:
+* `ip link add dummy01 type dummy`: Add dummy interface
+* `ip route add [source ip prefix] dev dummy01`: Route traffic toward the dummy interface
+
+
 QUIC Probe module
 -----------------------
 

@@ -62,6 +62,7 @@ IPv6 support
 We added IPv6 support to ZMap and include the following new probe modules:
 
 * ICMPv6 Echo Request: `icmp6_echoscan`
+* ICMPv6 Router Discovery: `icmp6_router_discovery`
 * IPv6 TCP SYN (any port): `ipv6_tcp_synscan` or `ipv6_tcp_synopt`
 * IPV6 UDP (any port and payload): `ipv6_udp`
 * IPV6 DNS (any port): `ipv6_dns`
@@ -72,6 +73,18 @@ In addition, you need to specify the source IPv6 address with the `--ipv6-source
 More information can be found using the `--help` flag.
 
 As targets for your IPv6 measurements you can e.g. use addresses from our [IPv6 Hitlist Service](https://ipv6hitlist.github.io/).
+
+Subnet-Router anycast probing using the `icmp6_router_discovery` module
+---
+
+We use the `icmp6_router_discovery` module for Subnet-Router anycast (SRA) probing.
+
+The module works as follows:
+
+1. Encoding of the target IPv6 address in the ICMPv6 payload.
+
+2. Extracting the initial destination IPv6 address from the mirrored payload in the ICMPv6 reply and storing it in the `initial-ip` output field.
+The replying IPv6 address is stored in the `saddr` output field.
 
 Separate interface for receiving packets
 -----------------------

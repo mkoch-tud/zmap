@@ -88,6 +88,12 @@ Commands to set this up might look like this:
 * `ip link add dummy01 type dummy`: Add dummy interface
 * `ip route add [source ip prefix] dev dummy01`: Route traffic toward the dummy interface
 
+Skipping packet validation checks
+-----------------------
+
+In some cases it might be useful to capture all incoming packets and ignoring validation checks.
+
+* `--all-replies`: ignore other filter options and skip the validation checks
 
 QUIC Probe module
 -----------------------
